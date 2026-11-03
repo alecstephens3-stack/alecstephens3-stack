@@ -1,43 +1,46 @@
 # Alec Stephens
 
-Applied AI engineer. I sit between a team and the model: learn how the work
-actually runs, ship the agent, the knowledge system, or the automation that
-runs it, and keep it running in production. Then I teach the people who use it.
+I'm an applied AI engineer and co-founder of [Stephens AI](https://stephensai.co). We build
+software for independent healthcare practices. I start with the person who does the job, find the
+task that takes most of their week, and build software that does it and asks them before anything
+risky.
 
-Two years of that, end to end, for businesses that hand over their AI work and
-expect it to hold up on a Tuesday afternoon with the wifi flickering.
+Client code stays private. The repos below are rebuilds of production systems with no client data
+in them. The tests came across with the code.
 
-**Stack I ship in:** TypeScript and Python. Claude and OpenAI APIs, agents and
-tool calling, MCP servers and connectors, evals, RAG on Postgres and Pinecone.
-Supabase with row-level security, Next.js, Google Apps Script, Playwright,
-Docker. Claude Code and Codex as the daily build environment, with scoped
-sub-agents and a shared context layer between them.
+## Repos
 
-## Systems in production
+| Repo | What it is |
+|---|---|
+| [bill-intake](https://github.com/alecstephens3-stack/bill-intake) | Vendor bills read by Claude on AWS Bedrock, filed by plain rules, entered in QuickBooks Online only after a person approves. The production version has run on a bookkeeper's PC since 1 October 2026, with no failed bill as of late October. |
+| [claude-code-operating-system](https://github.com/alecstephens3-stack/claude-code-operating-system) | How I run the business on Claude Code: sub-agents with least-privilege tool lists, hook guards, a secret-scanning pre-commit hook, scheduled jobs, and a one-way mirror for Codex. |
+| [claude-code-voice-mod](https://github.com/alecstephens3-stack/claude-code-voice-mod) | A Claude Code mod that holds the agent to one writing voice, checks each reply and outgoing draft with a Simplified Technical English checker, and opens browser steps as checklist pages whose ticks are saved. |
+| [lens-design-system](https://github.com/alecstephens3-stack/lens-design-system) | The design system behind our reports and proposals. Tokens generated to CSS, JSON and TypeScript, a build step that inlines the kit into one HTML file, and a WebGL shader that draws photos as banknote-style engravings. |
+| [supabase-team-knowledge-base](https://github.com/alecstephens3-stack/supabase-team-knowledge-base) | The pattern behind an eye care practice's front-desk knowledge base: everyone reads, two named people edit, and Postgres row-level security enforces it. |
+| [apps-script-pto-payroll](https://github.com/alecstephens3-stack/apps-script-pto-payroll) | The date and balance logic from a clinic's time-off and payroll system on Google Sheets, with 183 regression tests. |
+| [alec-stephens-ai](https://github.com/alecstephens3-stack/alec-stephens-ai) | The stephensai.co site. Next.js, React, TypeScript, Tailwind. |
 
-| System | Where it runs | What it does |
-|---|---|---|
-| **Front-desk knowledge base** | 27-person eyecare clinic, daily since Aug 2026 | Staff look up plan rules, protocols, and pricing in seconds. Two named managers edit in-app behind Postgres RLS and Google OAuth, with revision history and restore. Offline-first on tablets. The generic pattern is public: [supabase-team-knowledge-base](https://github.com/alecstephens3-stack/supabase-team-knowledge-base). |
-| **PTO and payroll system** | Same clinic, since Apr 2026 | Replaced a paper process that cost 60 to 100 hours a year. Form intake, balance and conflict checks, approvals from a phone, calendar events, a payroll report every pay period. Anniversary-aware routing, recompute-on-write balances, a 22-check release suite. The logic is public: [apps-script-pto-payroll](https://github.com/alecstephens3-stack/apps-script-pto-payroll). |
-| **Claude Team rollout + invoice capture** | Same clinic, 2026 | Four seats, connectors, onboarding sessions for the bookkeeper. Vendor PDF bills routed into QuickBooks capture with filing rules, vendor defaults, and a human review step. Deterministic where the answer is known; the model only handles the messy input. |
-| **AI operating model for a consulting practice** | HR and business-coaching firm | One knowledge doc as the source of truth and four agents that triage the inbox, draft scheduling replies, turn voice notes into tasks, and keep the doc current. Handed over as a portable 7-file system the owner runs herself. |
-| **In-house AI stack for a 1M-audience education company** | Mar to Sep 2026 | Owned the AI tooling and ran the engineering through Claude Code and Codex: MCP and API connections into Wistia, Circle, Customer.io, Google Workspace, and Slack; a one-command publishing pipeline with an ffmpeg loudness gate; the weekly KPI report leadership reads; a newsletter that went from a multi-hour job to review-and-send. About 10 hours a week back to the team. Plus 100+ short tutorials on agents, Claude Code, and MCP for a non-technical audience. |
-| **My own operating system** | Every day | A 500+ note vault with RAG search, 28+ automation modules, six least-privilege sub-agents wired to 10+ systems through MCP, and scheduled jobs that leave an inspectable log. The site it produces: [stephensai.co](https://stephensai.co) ([source](https://github.com/alecstephens3-stack/alec-stephens-ai)). |
+## Running now
 
-## What I care about when I build
+At an eye care practice, the front desk looks things up in a knowledge base I built instead of
+stopping the office manager, which comes to about 200 hours a year. Time off and payroll moved
+off paper slips onto a system that routes requests, checks balances and builds the payroll
+report, about 60 to 100 hours of admin a year. The bill reader costs about a cent a bill. In a
+side-by-side test on the bookkeeper's real invoices, QuickBooks' own reader got 40% of the totals
+wrong and ours got every one right.
 
-- **The grid is the truth, the counter is a copy.** Anything derived gets
-  recomputed from source after every write. Counters drift; I have the bug
-  reports to prove it.
-- **Regression tests that can fail on the bug.** A test that passes on the
-  broken code proves nothing. My suites run the old predicate too.
-- **Degrade to the old behaviour.** New routing ships with a fallback to the
-  path it replaces, so a live request can never break on deploy day.
-- **Deterministic where the answer is known.** The model gets the messy input
-  and the judgment call. Everything else is a script with a log.
-- **Write the reasoning next to the code.** The next person is usually me in
-  three months, or a client's office manager reading a runbook.
+With my co-founder I'm also building insurance claims software. It reads a practice's claims
+report and asks each insurer where every unpaid claim stands over X12 276/277, inside the
+practice's own AWS account. It runs at an eye care practice, and a dental practice is being set
+up.
 
-## Elsewhere
+Before this I owned the AI tooling at a nine-figure education company and made more than 200
+short videos teaching AI to people who don't work in tech.
+
+## How I build
+
+I use plain code where the answer is known and the model only for messy input, like a scanned
+bill or an insurer's reply. Anything that touches money or patient data waits for a person. When
+something breaks, I add a check that fails loudly and a test built from the case that broke.
 
 [stephensai.co](https://stephensai.co) · [LinkedIn](https://linkedin.com/in/alecpstephens) · alec@stephensai.co
