@@ -1,6 +1,6 @@
 # Alec Stephens
 
-I'm an applied AI engineer and co-founder of [Stephens AI](https://stephensai.co). We build
+I'm an applied AI engineer and co-founder of [Syntegrity](https://syntegrityai.com), formerly Stephens AI. We build
 software for independent healthcare practices. I start with the person who does the job, find the
 task that takes most of their week, and build software that does it and asks them before anything
 risky.
@@ -44,4 +44,4 @@ I use plain code where the answer is known and the model only for messy input, l
 bill or an insurer's reply. Anything that touches money or patient data waits for a person. When
 something breaks, I add a check that fails loudly and a test built from the case that broke.
 
-[stephensai.co](https://stephensai.co) · [LinkedIn](https://linkedin.com/in/alecpstephens) · alec@stephensai.co
+[syntegrityai.com](https://syntegrityai.com) · [LinkedIn](https://linkedin.com/in/alecpstephens) · alec@syntegrityai.com
